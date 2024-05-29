@@ -1,10 +1,10 @@
 package ag.agriconnectreleves.exposition;
 
 import ag.agriconnectreleves.entities.Releve;
-import ag.agriconnectreleves.repo.ReleveRepository;
+import ag.agriconnectreleves.services.ReleveService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -16,8 +16,11 @@ import org.springframework.web.bind.annotation.*;
 public class ReleveController {
     Logger logger = LoggerFactory.getLogger(ReleveController.class);
 
-    @Autowired
-    private ReleveRepository repo;
+    ReleveService releveService;
+
+    public ReleveController(ReleveService releveService) {
+        this.releveService = releveService;
+    }
 
     /**
      * GET 1 relevé
@@ -27,27 +30,27 @@ public class ReleveController {
     @GetMapping("/{id}")
     public Releve getReleve(@PathVariable("id") long id) {
         logger.info("Releve : demande d'un relevé avec id:{}", id);
-        return repo.findById(id).orElse(null);
+        return releveService.getReleve(id);
     }
 
     /**
      * GET liste des relevés par idCapteur
      * @return liste des relevés en JSON. [] si aucun relevé.
      */
-    @GetMapping("")
-    public Iterable<Releve> getRelevesParCapteur(@RequestParam("capteur") Long idCapteur) {
+    @GetMapping("/capteur/{id}")
+    public Iterable<Releve> getRelevesParCapteur(@PathVariable("id") Long idCapteur) {
         logger.info("Releve : demande des relevés pour le capteur id:{}", idCapteur);
-        return repo.findAllByIdCapteur(idCapteur);
+        return releveService.getRelevesParCapteur(idCapteur);
     }
 
     /**
      * GET liste de tous les relevés
      * @return liste des relevés en JSON. [] si aucun relevé.
      */
-    @GetMapping("/all")
+    @GetMapping("")
     public Iterable<Releve> getReleves() {
         logger.info("Releve : demande de la liste de tous les relevés");
-        return repo.findAll();
+        return releveService.getReleves();
     }
 
     /**
@@ -56,9 +59,9 @@ public class ReleveController {
      * @return relevé ajouté
      */
     @PostMapping("")
-    public Releve postReleve(@RequestBody Releve releve) {
+    @ResponseStatus(HttpStatus.CREATED)
+    public Releve addReleve(@RequestBody Releve releve) {
         logger.info("Releve : création d'un relevé avec id:{}", releve.getId());
-        return repo.save(releve);
+        return releveService.addReleve(releve);
     }
-
 }
