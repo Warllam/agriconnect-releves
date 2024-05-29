@@ -1,11 +1,12 @@
 package ag.agriconnectreleves.entities;
 
-import jakarta.persistence.Entity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import jakarta.persistence.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
+import org.springframework.data.annotation.Id;
 
 import java.time.LocalDate;
 
@@ -22,16 +23,16 @@ import java.time.LocalDate;
 /**
  * Objet métier Releve
  */
-@Entity
+@Document(collection = "releves")
 public class Releve {
     @Id
     private long id;
-
+    @Field
     private LocalDate dateReleve;
-
+    @Field
     private int humitide;
-
+    @Field
     private double temperature;
-
+    @Field
     private Long idCapteur;
 }
