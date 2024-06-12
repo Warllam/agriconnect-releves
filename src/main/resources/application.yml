@@ -1,38 +1,7 @@
-# Proprietes de l'application
 spring:
   application:
-    name: ac-releve # nom de l'application
-  data:
-    mongodb:
-      host: localhost # URL mongodb
-      port: 27020
-      database: ag-releves-db
-      username: root
-      password: root
-      authentication-database: admin
-
-eureka:
-  client:
-    serviceUrl:
-        defaultZone: http://localhost:8761/eureka/
-
-# Activation des endpoints pour le monitoring
-management:
-  endpoints:
-    web:
-      exposure:
-        include: env,health,
-          info,metrics,
-          loggers,mappings, prometheus
-  tracing:
-    sampling:
-      probability: 1.0
-
-# Configuration du log.
-logging:
-  level:
-    org.springframework.web: INFO # Choix du niveau de log affich�
-
-# Proprietes du serveur d'entreprise
-server:
-  port: 10004 # HTTP (Tomcat) port
+    name: acreleves
+  profiles:
+    active: dev
+  config:
+    import: optional:configserver:http://localhost:10002
