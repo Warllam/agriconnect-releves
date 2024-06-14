@@ -7,6 +7,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.util.List;
+
 /**
  * Service d'exposition REST des relevés.
  * URL /releves exposée.
@@ -41,6 +44,16 @@ public class ReleveController {
     public Iterable<Releve> getRelevesParCapteur(@PathVariable("id") Long idCapteur) {
         logger.info("Releve : demande des relevés pour le capteur id:{}", idCapteur);
         return releveService.getRelevesParCapteur(idCapteur);
+    }
+
+    /**
+     * GET liste des relevés par idCapteur et Jour
+     * @return liste des relevés en JSON. [] si aucun relevé.
+     */
+    @GetMapping("/capteur/{id}/{date}")
+    public List<Releve> getRelevesParCapteurEtParJour(@PathVariable("id") Long idCapteur, @PathVariable("date") LocalDate date) {
+        logger.info("Releve : demande des relevés pour le capteur id: {} à la date du {}", idCapteur, date);
+        return releveService.getRelevesParCapteurEtParJour(idCapteur, date);
     }
 
     /**
