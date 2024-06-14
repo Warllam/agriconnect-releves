@@ -51,9 +51,9 @@ public class ReleveController {
      * @return liste des relevés en JSON. [] si aucun relevé.
      */
     @GetMapping("/capteur/{id}/{date}")
-    public List<Releve> getRelevesParCapteurEtParJour(@PathVariable("id") Long idCapteur, @PathVariable("date") LocalDate date) {
-        logger.info("Releve : demande des relevés pour le capteur id: {} à la date du {}", idCapteur, date);
-        return releveService.getRelevesParCapteurEtParJour(idCapteur, date);
+    public List<Releve> getRelevesParCapteurEtParJour(@PathVariable Long id, @PathVariable LocalDate date) {
+        logger.info("Releve : demande des relevés pour le capteur id: {} à la date du {}", id, date);
+        return releveService.getRelevesParCapteurEtParJour(id, date);
     }
 
     /**
