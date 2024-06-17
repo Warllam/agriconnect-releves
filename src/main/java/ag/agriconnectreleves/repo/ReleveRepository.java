@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Repository pour la gestion des relevés dans MongoDB.
@@ -17,7 +18,7 @@ public interface ReleveRepository extends MongoRepository<Releve, Long> {
      * @param idCapteur Identifiant du capteur
      * @return Liste des relevés
      */
-    List<Releve> findAllByIdCapteur(Long idCapteur);
+    Optional<List<Releve>> findAllByIdCapteur(Long idCapteur);
 
 
     /**
@@ -26,6 +27,6 @@ public interface ReleveRepository extends MongoRepository<Releve, Long> {
      * @param date Date spécifique
      * @return List of readings
      */
-    List<Releve> findByIdCapteurAndDateReleve(Long idCapteur, LocalDate date);
+    Optional<List<Releve>> findByIdCapteurAndDateReleve(Long idCapteur, LocalDate date);
 }
 

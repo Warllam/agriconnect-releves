@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ReleveService {
@@ -24,11 +25,11 @@ public class ReleveService {
         return repo.findById(id).orElse(null);
     }
 
-    public Iterable<Releve> getRelevesParCapteur(Long idCapteur){
+    public Optional<List<Releve>> getRelevesParCapteur(Long idCapteur){
         return repo.findAllByIdCapteur(idCapteur);
     }
 
-    public List<Releve> getRelevesParCapteurEtParJour(Long idCapteur, LocalDate date){
+    public Optional<List<Releve>> getRelevesParCapteurEtParJour(Long idCapteur, LocalDate date){
         return repo.findByIdCapteurAndDateReleve(idCapteur, date);
     }
 
