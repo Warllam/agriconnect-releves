@@ -77,4 +77,14 @@ public class ReleveController {
         logger.info("Releve : création d'un relevé avec id:{}", releve.getId());
         return releveService.addReleve(releve);
     }
+
+    /**
+     * DELETE un relevé
+     * @param releve Relevé à delete
+     */
+    @DeleteMapping("/{id}")
+    public void deleteReleve(@PathVariable Long id) {
+        logger.info("Releve : suppression d'un relevé avec id:{}", id);
+        releveService.deleteReleve(id);
+    }
 }

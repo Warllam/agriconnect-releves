@@ -36,4 +36,8 @@ public class ReleveService {
         return repo.save(releve);
     }
 
+    public void deleteReleve(long id){
+        repo.deleteById(id);
+    }
+
 }
