@@ -5,6 +5,7 @@ import ag.agriconnectreleves.services.ReleveService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -41,9 +42,12 @@ public class ReleveController {
      * @return liste des relevés en JSON. [] si aucun relevé.
      */
     @GetMapping("/capteur/{id}")
-    public Iterable<Releve> getRelevesParCapteur(@PathVariable("id") Long idCapteur) {
+    public ResponseEntity<List<Releve>> getRelevesParCapteur(@PathVariable("id") Long idCapteur) {
         logger.info("Releve : demande des relevés pour le capteur id:{}", idCapteur);
-        return releveService.getRelevesParCapteur(idCapteur);
+        if (releveService.getRelevesParCapteur(idCapteur).isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(releveService.getRelevesParCapteur(idCapteur).get());
     }
 
     /**
@@ -51,9 +55,12 @@ public class ReleveController {
      * @return liste des relevés en JSON. [] si aucun relevé.
      */
     @GetMapping("/capteur/{id}/{date}")
-    public List<Releve> getRelevesParCapteurEtParJour(@PathVariable Long id, @PathVariable LocalDate date) {
+    public ResponseEntity<List<Releve>> getRelevesParCapteurEtParJour(@PathVariable Long id, @PathVariable LocalDate date) {
         logger.info("Releve : demande des relevés pour le capteur id: {} à la date du {}", id, date);
-        return releveService.getRelevesParCapteurEtParJour(id, date);
+        if (releveService.getRelevesParCapteurEtParJour(id, date).isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(releveService.getRelevesParCapteurEtParJour(id, date).get());
     }
 
     /**
